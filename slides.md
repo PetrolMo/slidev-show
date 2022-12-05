@@ -34,7 +34,7 @@ css: unocss
 ---
 # 1.各大网站的实现方案
 ### 1.bilibili
-<img src="public/bilibili.png" width="700"/>
+<img src="/bilibili.png" width="700"/>
 ---
 layout: image-right
 image: /bilibili.png
@@ -57,7 +57,7 @@ html.gray {
 ---
 # 1.各大网站的实现方案
 ### 2.京东
-  <img src="public/jd.png" width="700"/>
+  <img src="/jd.png" width="700"/>
 ---
 layout: image-right
 image: /jd.png
@@ -80,7 +80,7 @@ html.o2_gray {
 ---
 # 1.各大网站的实现方案
 ### 3.淘宝
-  <img src="public/taobao.png" width="700"/>
+  <img src="/taobao.png" width="700"/>
 ---
 layout: image-right
 image: /taobao.png

@@ -128,7 +128,7 @@ watch(selectedList, (val, oldVal) => {
 <template>
   <div class="main">
     <div class="container">
-      <img src="../public/exm.JPG" width="400" height="400" alt="" :style="{ filter: cssLabel }">
+      <img src="/exm.jpg" width="400" height="400" alt="" :style="{ filter: cssLabel }">
       <div class="mt-2">
         <input id="multiple" type="checkbox" v-model="isMultiple">
         <label for="multiple" class="ml-1">混合使用</label>
