@@ -8,7 +8,8 @@ enum FilterMaps {
   Contrast = 3,
   Opacity = 4,
   Sepia = 5,
-  Saturate = 6
+  Saturate = 6,
+  DropShadow = 7
 }
 interface FilterItem {
   key: string,
@@ -77,17 +78,44 @@ const defaultList = {
     max: 200,
     default: 100,
     value: undefined
+  },
+  7: {
+    key: 'drop-shadow',
+    unit: {
+      offsetX: 'px',
+      offsetY: 'px',
+      blurRadius: 'px',
+      color: ''
+    },
+    default: [0, 0, 5, '#000000'],
+    value: [0, 0, 5, '#000000']
   }
 }
+const props = defineProps({
+  showComponent: {
+    type: Boolean,
+    default: true
+  },
+  css: {
+    type: String,
+    default: ''
+  },
+  width: {
+    type: Number
+  },
+  height: {
+    type: Number
+  }
+})
 let isMultiple = ref(false)
 watch(isMultiple, (val) => {
   if(!val) {
     filterList.value = JSON.parse(JSON.stringify(defaultList))
   }
 })
-let cssLabel:Ref<string> = ref('grayscale(0%)')
+let cssLabel:Ref<string> = ref(props.css)
 const filterList: Ref<Filter> = ref(JSON.parse(JSON.stringify(defaultList)))
-const selected: Ref<FilterMaps> = ref(FilterMaps.Gray)
+const selected: Ref<FilterMaps> = ref(FilterMaps.Blur)
 let sliderValue: Ref<number> = ref(0)
 function paintImage() {
   if (!isMultiple.value) {
@@ -99,9 +127,19 @@ watch(sliderValue, (val: number) => {
   filterList.value[selected.value].value = ((item.max - item.min) / 100 * val).toFixed(0)
   paintImage()
 })
-watch(selected, (val: number) => {
+watch(selected, (val: FilterMaps) => {
   const value = filterList.value[val].value ? filterList.value[val].value : filterList.value[val].default
+  if (val === FilterMaps.DropShadow) {
+    filterList.value[val].value = value
+    return
+  }
   sliderValue.value = Number((value / filterList.value[val].max * 100).toFixed(0))
+})
+watch(filterList.value[FilterMaps.DropShadow].value, (val) => {
+  if (isMultiple.value) {
+    return
+  }
+  cssLabel.value = `drop-shadow(${val[0]}px ${val[1]}px ${val[2]}px ${val[3]})`
 })
 const currentLabel = computed(() => {
   const value = filterList.value[selected.value].value ? filterList.value[selected.value].value : filterList.value[selected.value].default
@@ -119,42 +157,74 @@ const selectedList = computed(() => {
 watch(selectedList, (val, oldVal) => {
   if (!isMultiple.value) return
   cssLabel.value = ''
-  selectedList.value.forEach((key: number) => {
-    cssLabel.value +=  ` ${filterList.value[key].key}(${filterList.value[key].value}${filterList.value[key].unit})`
+  selectedList.value.forEach((key: FilterMaps) => {
+    if (key === FilterMaps.DropShadow) {
+      const val = filterList.value[key].value
+      cssLabel.value += ` drop-shadow(${val[0]}px ${val[1]}px ${val[2]}px ${val[3]})`
+    }
+    else {
+      cssLabel.value +=  ` ${filterList.value[key].key}(${filterList.value[key].value}${filterList.value[key].unit})`
+    }
   })
 })
 </script>
 
 <template>
-  <div class="main">
-    <div class="container">
-      <img src="/exm.jpg" width="400" height="400" alt="" :style="{ filter: cssLabel }">
-      <div class="mt-2">
+  <div class="main" v-if="props.showComponent">
+    <div v-if="props.showComponent" class="container">
+      <img class="image" src="/exm.jpg" alt="" :style="{ filter: cssLabel, width: `${props.width}px` }">
+      <div class="mt-2" v-if="props.showComponent">
         <input id="multiple" type="checkbox" v-model="isMultiple">
         <label for="multiple" class="ml-1">混合使用</label>
       </div>
-      <div class="mt-2">
+      <div class="mt-2" v-if="props.showComponent">
         <select id="filter" v-model="selected">
-          <option :value="0">灰色</option>
-          <option :value="1">模糊</option>
-          <option :value="2">亮度</option>
-          <option :value="3">对比度</option>
-          <option :value="4">不透明度</option>
-          <option :value="5">棕褐色</option>
-          <option :value="6">饱和度</option>
+          <option :value="FilterMaps.Gray">灰色</option>
+          <option :value="FilterMaps.Blur">模糊</option>
+          <option :value="FilterMaps.Brightness">亮度</option>
+          <option :value="FilterMaps.Contrast">对比度</option>
+          <option :value="FilterMaps.Opacity">不透明度</option>
+          <option :value="FilterMaps.Sepia">棕褐色</option>
+          <option :value="FilterMaps.Saturate">饱和度</option>
+          <option :value="FilterMaps.DropShadow">阴影</option>
         </select>
       </div>
-      <div class="mt-2">
+      <div class="mt-2" v-if="selected !== FilterMaps.DropShadow && props.showComponent">
         <input id="slider" type="range" v-model="sliderValue">
         <span id="current" class="ml-2">{{ currentLabel }}</span>
       </div>
+      <div class="drop-shadow" v-else-if="props.showComponent">
+        <div>
+          <label for="offsetX">offset-x</label>
+          <input id="offsetX" v-model="filterList[FilterMaps.DropShadow].value[0]">
+          <span class="ml-1">px</span>
+        </div>
+        <div>
+          <label for="offsetY">offset-y</label>
+          <input id="offsetY" v-model="filterList[FilterMaps.DropShadow].value[1]">
+          <span class="ml-1">px</span>
+        </div>
+        <div>
+          <label for="blurRadius">blur-radius</label>
+          <input id="blurRadius" v-model="filterList[FilterMaps.DropShadow].value[2]">
+          <span class="ml-1">px</span>
+        </div>
+        <div>
+          <label for="color">color</label>
+          <input id="color" type="color" v-model="filterList[FilterMaps.DropShadow].value[3]">
+        </div>
+      </div>
     </div>
-    <div class="code">
+    <div v-if="props.showComponent" class="code">
          <pre><code>
 image:{
      filter: {{ cssLabel }}
    }</code></pre>
     </div>
+  </div>
+  <div v-else>
+    <img class="image" src="/exm.jpg" alt="" :style="{ filter: cssLabel, width: `${props.width}px` }">
+    <div class="css-label">filter: {{ cssLabel }}</div>
   </div>
 </template>
 
@@ -185,5 +255,29 @@ pre {
   border-radius: 4px;
   padding: 0 20px;
   width: 45%;
+}
+.drop-shadow {
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+  flex-wrap: wrap;
+}
+.drop-shadow > div {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.drop-shadow label {
+  font-weight: bold;
+}
+.drop-shadow input {
+  border: 1px solid #000000;
+  width: 40px;
+  margin-left: 10px;
+}
+.image {
+  overflow: hidden;
+}
+.css-label {
+  font-size: 10px;
 }
 </style>

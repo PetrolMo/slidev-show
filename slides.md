@@ -140,6 +140,19 @@ html {
 <br>
 >注意：blur作用在有内容的父元素上，会将子元素都模糊化。如果不想要周边的阴影，可以在父元素上加overflow:hidden。
 
+```css {2|3|4}
+.image {
+  filter: blur(0);
+  filter: blur(2px);
+  filter: blur(5px);
+}
+```
+<div class="flex">
+<BImage :show-component="false" width="250" css="blur(0)" />
+<BImage class="ml-10" :show-component="false" width="250" css="blur(2px)" />
+<BImage class="ml-10" :show-component="false" width="250" css="blur(5px)" />
+</div>
+
 ---
 --- 
 ## 2.brightness 亮度
@@ -147,6 +160,18 @@ html {
 
 > brightness() 函数可用于调整图像的亮度级别，使其看起来更亮或更暗。当值为 0% 时，会产生全黑图像。值为 100% 或 1 会使图像保持其原始亮度级别。大于或小于 100% 或 1 的值决定图像的暗度或亮度。
 
+```css {3|2|4}
+.image {
+  filter: brightness(50%);
+  filter: brightness(100%);
+  filter: brightness(200%);
+}
+```
+<div class="flex">
+<BImage :show-component="false" width="250" css="brightness(50%)" />
+<BImage class="ml-10" :show-component="false" width="250" css="brightness(100%)" />
+<BImage class="ml-10" :show-component="false" width="250" css="brightness(200%)" />
+</div>
 ---
 --- 
 ## 3.contrast 对比度
@@ -154,6 +179,18 @@ html {
 
 > contrast() 函数用于调整图像的对比度，也就是调整图像最暗和最亮部分之间的亮度差异 。它接受百分比或小数值来确定图像的对比度级别——值为 0 会导致完全灰色的图像。高于 100% 和 1 的值会增加对比度，而低于 100% 的参数会降低图像的对比度。
 
+```css {3|2|4}
+.image {
+  filter: contrast(50%);
+  filter: contrast(100%);
+  filter: contrast(200%);
+}
+```
+<div class="flex">
+<BImage :show-component="false" width="250" css="contrast(50%)" />
+<BImage class="ml-10" :show-component="false" width="250" css="contrast(100%)" />
+<BImage class="ml-10" :show-component="false" width="250" css="contrast(200%)" />
+</div>
 ---
 --- 
 ## 4.opacity 不透明度
@@ -161,7 +198,21 @@ html {
 
 > opacity() 函数将透明效果应用于图像。它接受百分比或小数值来决定应用于图像的透明度。0% 或 0 的不透明度将产生完全透明的元素。100% 不透明度将显示不透明。将不透明度设置在 0% 和 100% 之间将使元素或图像部分透明。
 
+```css {2|3|4}
+.image {
+  filter: opacity(10%);
+  filter: opacity(40%);
+  filter: opacity(100%);
+}
+```
+<div class="flex">
+<BImage :show-component="false" width="250" css="opacity(10%)" />
+<BImage class="ml-10" :show-component="false" width="250" css="opacity(40%)" />
+<BImage class="ml-10" :show-component="false" width="250" css="opacity(100%)" />
+</div>
 <br/>
+---
+---
 那这个不透明度滤镜和CSS中的 opacity 属性有啥区别的？它们都用于控制元素的透明度。但是 filter 属性会启动硬件加速。浏览器会将计算任务卸载到图形处理单元 (GPU) — 一种旨在加速系统内图形渲染的专用处理器。这会提高浏览器的效率并释放 CPU 来执行其他任务。
 
 ---
@@ -170,7 +221,18 @@ html {
 <br/>
 
 > sepia() 函数可以为图像添加柔和的褐色色调，使图像看起来更温暖、更复古。它类似于使用灰度滤镜，但色调为褐色。它接受 0 到 1 之间的小数值，或最大为 100% 的百分比值。值为 0 会使图像保持不变。值为 100% 或 1 会将图像完全变为棕褐色，而介于 0% 和 100% 之间的值会使图像的色调介于其原始颜色和完全棕褐色之间。
-
+```css {2|3|4}
+.image {
+  filter: sepia(0);
+  filter: sepia(40%);
+  filter: sepia(100%);
+}
+```
+<div class="flex">
+<BImage :show-component="false" width="250" css="sepia(0)" />
+<BImage class="ml-10" :show-component="false" width="250" css="sepia(40%)" />
+<BImage class="ml-10" :show-component="false" width="250" css="sepia(100%)" />
+</div>
 ---
 --- 
 ## 6.drop-shadow 阴影
@@ -185,14 +247,36 @@ offset-y：长度值，指定元素和投影之间的垂直距离。正值将阴
 blur-radius: 阴影的模糊半径指定为 CSS 长度单位。值越大，阴影变得越模糊。如果未指定，则默认为 0，产生清晰且不模糊的阴影。不允许使用负值。
 <br>
 color：阴影的颜色。如果未指定，则默认为黑色。
-
+```css {2|3|4}
+.image {
+  filter: drop-shadow(0);
+  filter: drop-shadow(4px 4px 10px yellow);
+  filter: drop-shadow(8px -8px 12px black);
+}
+```
+<div class="flex">
+<BImage :show-component="false" width="200" css="drop-shadow(0)" />
+<BImage class="ml-10" :show-component="false" width="200" css="drop-shadow(4px 4px 10px yellow)" />
+<BImage class="ml-10" :show-component="false" width="200" css="drop-shadow(8px -8px 12px black)" />
+</div>
 ---
 --- 
 ## 7.saturate 饱和度
 <br/>
 
 > saturate() 函数用于改变元素中颜色的饱和度。饱和元素的颜色比较鲜艳；对于曝光不足的图像可以增加饱和度，反之亦然。饱和度可以用百分比表示，0% 表示完全不饱和，100% 表示与原图像一样。
-
+```css {2|3|4}
+.image {
+  filter: saturate(50%);
+  filter: saturate(100%);
+  filter: saturate(200%);
+}
+```
+<div class="flex">
+<BImage :show-component="false" width="250" css="saturate(50%)" />
+<BImage class="ml-10" :show-component="false" width="250" css="saturate(100%)" />
+<BImage class="ml-10" :show-component="false" width="250" css="saturate(200%)" />
+</div>
 ---
 --- 
 ## 8.混合使用
@@ -211,10 +295,10 @@ initial：filter 属性的默认值，会解析为 none。
 inherit：从元素的直接父级计算的 filter 属性的值。
 ---
 
-# 示例
+### 示例
 
 <div>
 <!-- ./components/BImage.vue -->
-<BImage />
+<BImage :show-component="true" :width="400" :height="400" />
 </div>
 ---
