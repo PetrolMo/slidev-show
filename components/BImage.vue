@@ -220,7 +220,7 @@ watch(selectedList, (val, oldVal) => {
     </div>
     <div class="code">
          <pre><code>
-image:{
+.image:{
      filter: {{ cssLabel }}
    }</code></pre>
     </div>
