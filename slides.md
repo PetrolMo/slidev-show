@@ -4,9 +4,9 @@ theme: seriph
 record: dev
 # random image from a curated Unsplash collection by Anthony
 # like them? see https://unsplash.com/collections/94734566/slidev
-background: /cover.gif
+background: /bilibili.png
 # apply any windi css classes to the current slide
-class: 'text-center'
+class: 'text-center text-gray-500 '
 # https://sli.dev/custom/highlighters.html
 highlighter: shiki
 # show line numbers in code blocks
@@ -28,7 +28,6 @@ css: unocss
 <div class="pt-12">
   <div>汇报人：南北233</div>
 </div>
-<!--The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)-->
 
 ---
 ---
@@ -295,7 +294,7 @@ initial：filter 属性的默认值，会解析为 none。
 inherit：从元素的直接父级计算的 filter 属性的值。
 ---
 
-### 示例
+#### 示例
 
 <div>
 <!-- ./components/BImage.vue -->

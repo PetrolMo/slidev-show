@@ -170,14 +170,14 @@ watch(selectedList, (val, oldVal) => {
 </script>
 
 <template>
-  <div class="main" v-if="props.showComponent">
-    <div v-if="props.showComponent" class="container">
+  <div class="main mt-2" v-if="props.showComponent">
+    <div class="container">
       <img class="image" src="/exm.jpg" alt="" :style="{ filter: cssLabel, width: `${props.width}px` }">
-      <div class="mt-2" v-if="props.showComponent">
+      <div class="mt-2">
         <input id="multiple" type="checkbox" v-model="isMultiple">
         <label for="multiple" class="ml-1">混合使用</label>
       </div>
-      <div class="mt-2" v-if="props.showComponent">
+      <div class="mt-2">
         <select id="filter" v-model="selected">
           <option :value="FilterMaps.Gray">灰色</option>
           <option :value="FilterMaps.Blur">模糊</option>
@@ -189,11 +189,11 @@ watch(selectedList, (val, oldVal) => {
           <option :value="FilterMaps.DropShadow">阴影</option>
         </select>
       </div>
-      <div class="mt-2" v-if="selected !== FilterMaps.DropShadow && props.showComponent">
+      <div class="mt-2" v-if="selected !== FilterMaps.DropShadow">
         <input id="slider" type="range" v-model="sliderValue">
         <span id="current" class="ml-2">{{ currentLabel }}</span>
       </div>
-      <div class="drop-shadow" v-else-if="props.showComponent">
+      <div class="drop-shadow" v-else>
         <div>
           <label for="offsetX">offset-x</label>
           <input id="offsetX" v-model="filterList[FilterMaps.DropShadow].value[0]">
@@ -215,7 +215,7 @@ watch(selectedList, (val, oldVal) => {
         </div>
       </div>
     </div>
-    <div v-if="props.showComponent" class="code">
+    <div class="code">
          <pre><code>
 image:{
      filter: {{ cssLabel }}
