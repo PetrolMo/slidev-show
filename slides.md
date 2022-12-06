@@ -30,15 +30,25 @@ css: unocss
 </div>
 
 ---
+layout: section
 ---
 # 1.各大网站的实现方案
-### 1.bilibili
+## 1.bilibili
+## 2.京东
+## 3.淘宝
+---
+---
+# 1.bilibili
 <img src="/bilibili.png" width="700"/>
 ---
 layout: image-right
 image: /bilibili.png
 ---
 ## bilibili实现代码
+<br>
+<br>
+<br>
+
 ```css {all|2|2-6|7-9|10}
 html.gray {
     filter: grayscale(85%) saturate(80%);
@@ -54,14 +64,17 @@ html.gray {
 ```
 ---
 ---
-# 1.各大网站的实现方案
-### 2.京东
+# 2.京东
   <img src="/jd.png" width="700"/>
 ---
 layout: image-right
 image: /jd.png
 ---
 ## 京东实现代码
+<br>
+<br>
+<br>
+
 ```css {all|6}
 html.o2_gray {
     -webkit-filter: grayscale(100%);
@@ -77,14 +90,17 @@ html.o2_gray {
 ```
 ---
 ---
-# 1.各大网站的实现方案
-### 3.淘宝
+# 3.淘宝
   <img src="/taobao.png" width="700"/>
 ---
 layout: image-right
 image: /taobao.png
 ---
 ## 淘宝实现代码
+<br>
+<br>
+<br>
+
 ```css {all|6}
 html {
     -webkit-filter: grayscale(100%);
@@ -97,8 +113,12 @@ html {
 }
 ```
 ---
+layout: section
 ---
 # 2.实现原理
+---
+layout: two-cols
+---
 ### CSS3 filter属性
 下面是MDN对filter的解释：
 <br/>
@@ -106,6 +126,11 @@ html {
 > CSS 属性 filter 将模糊或颜色偏移等图形效果应用于元素。滤镜通常用于调整图像、背景和边框的渲染。
 
 简单来说，filter 属性就是用来给元素添加不同的滤镜。该属性中支持传入多种 Filter 函数，其中 grayscale() 函数就是用于置灰的关键。grayscale() 函数将改变输入图像灰度，该函数有一个参数，表示转换为灰度的比例。当值为 100% 时，完全转为灰度图像；当值为 0% 时图像无变化。值在 0% 到 100% 之间，则是效果的线性乘数。若未设置值，默认是 0。
+::right::
+### 兼容写法
+<br>
+<img src="/filter-support.png" />
+<br>
 ```css
 {
   -webkit-filter: grayscale(100%);
@@ -120,16 +145,18 @@ html {
 }
 ```
 ---
+layout: section
 ---
 # filter属性拓展
-1. blur 模糊
-2. brightness 亮度
-3. contrast 对比度
-4. opacity 不透明度
-5. sepia 棕褐色
-6. drop-shadow 阴影
-7. saturate 饱和度
-8. 混合使用
+## 1. blur 模糊
+## 2. brightness 亮度
+## 3. contrast 对比度
+## 4. opacity 不透明度
+## 5. sepia 棕褐色
+## 6. drop-shadow 阴影
+## 7. saturate 饱和度
+## 8. 混合使用
+::right::
 ---
 --- 
 ## 1.blur 模糊
@@ -211,8 +238,15 @@ html {
 </div>
 <br/>
 ---
+layout: statement
 ---
-那这个不透明度滤镜和CSS中的 opacity 属性有啥区别的？它们都用于控制元素的透明度。但是 filter 属性会启动硬件加速。浏览器会将计算任务卸载到图形处理单元 (GPU) — 一种旨在加速系统内图形渲染的专用处理器。这会提高浏览器的效率并释放 CPU 来执行其他任务。
+
+# 那这个不透明度滤镜和CSS中的 opacity 属性有啥区别的？
+## 它们都用于控制元素的透明度。
+但是 filter 属性会**启动硬件加速**。浏览器会将计算任务卸载到**图形处理单元** (GPU)
+<br>
+<br>
+_一种旨在加速系统内图形渲染的专用处理器。这会提高浏览器的效率并释放 CPU 来执行其他任务。_
 
 ---
 --- 
@@ -243,7 +277,7 @@ offset-x：长度值，指定元素和投影之间的水平距离。正值将阴
 <br>
 offset-y：长度值，指定元素和投影之间的垂直距离。正值将阴影置于元素下方，负值将阴影置于其上方。
 <br>
-blur-radius: 阴影的模糊半径指定为 CSS 长度单位。值越大，阴影变得越模糊。如果未指定，则默认为 0，产生清晰且不模糊的阴影。不允许使用负值。
+blur-radius: 阴影的模糊半径指定为 CSS 长度单位。值越大，阴影变得越模糊。如果未指定，则默认为 0，产生清晰且不模糊的阴影。**不允许使用负值。**
 <br>
 color：阴影的颜色。如果未指定，则默认为黑色。
 ```css {2|3|4}
@@ -277,6 +311,7 @@ color：阴影的颜色。如果未指定，则默认为黑色。
 <BImage class="ml-10" :show-component="false" width="250" css="saturate(200%)" />
 </div>
 ---
+layout: two-cols
 --- 
 ## 8.混合使用
 <br/>
@@ -292,12 +327,25 @@ filter: blur() | brightness() | contrast() | drop-shadow() | grayscale() | hue-r
 initial：filter 属性的默认值，会解析为 none。
 <br>
 inherit：从元素的直接父级计算的 filter 属性的值。
+
+```css
+.image {
+  filter:  grayscale(38%) blur(1px) contrast(122%) 
+  saturate(124%) drop-shadow(0px 0px 5px #000000)
+}
+```
+
+::right::
+<br>
+<br>
+<br>
+<BImage class="ml-10" :show-component="false" :un-show-css="true" :width="350" :height="350" css="grayscale(38%) blur(1px) contrast(122%) saturate(124%) drop-shadow(0px 0px 5px #000000)" />
 ---
 
-#### 示例
+####
 
 <div>
 <!-- ./components/BImage.vue -->
-<BImage :show-component="true" :width="400" :height="400" />
+<BImage :show-component="true" :width="400" :showCss="true" :height="400" />
 </div>
 ---

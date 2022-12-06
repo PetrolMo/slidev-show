@@ -88,7 +88,8 @@ const defaultList = {
       color: ''
     },
     default: [0, 0, 5, '#000000'],
-    value: [0, 0, 5, '#000000']
+    value: [0, 0, 5, '#000000'],
+    selected: false
   }
 }
 const props = defineProps({
@@ -101,10 +102,14 @@ const props = defineProps({
     default: ''
   },
   width: {
-    type: Number
+    type: [Number, String]
   },
   height: {
-    type: Number
+    type: [Number, String]
+  },
+  unShowCss: {
+    type: Boolean,
+    default: false
   }
 })
 let isMultiple = ref(false)
@@ -130,15 +135,13 @@ watch(sliderValue, (val: number) => {
 watch(selected, (val: FilterMaps) => {
   const value = filterList.value[val].value ? filterList.value[val].value : filterList.value[val].default
   if (val === FilterMaps.DropShadow) {
-    filterList.value[val].value = value
+    filterList.value[val].selected = !filterList.value[val].selected
+    cssLabel.value = `drop-shadow(${value[0]}px ${value[1]}px ${value[2]}px ${value[3]})`
     return
   }
   sliderValue.value = Number((value / filterList.value[val].max * 100).toFixed(0))
 })
 watch(filterList.value[FilterMaps.DropShadow].value, (val) => {
-  if (isMultiple.value) {
-    return
-  }
   cssLabel.value = `drop-shadow(${val[0]}px ${val[1]}px ${val[2]}px ${val[3]})`
 })
 const currentLabel = computed(() => {
@@ -224,7 +227,7 @@ image:{
   </div>
   <div v-else>
     <img class="image" src="/exm.jpg" alt="" :style="{ filter: cssLabel, width: `${props.width}px` }">
-    <div class="css-label">filter: {{ cssLabel }}</div>
+    <div class="css-label" v-if="!unShowCss">filter: {{ cssLabel }}</div>
   </div>
 </template>
 
