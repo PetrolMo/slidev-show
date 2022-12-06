@@ -29,7 +29,8 @@ const defaultList = {
     min: 0,
     max: 100,
     default: 0,
-    value: 0
+    value: undefined,
+    selected: true
   },
   1: {
     key: 'blur',
@@ -37,7 +38,8 @@ const defaultList = {
     min: 0,
     max: 10,
     default: 0,
-    value: undefined
+    value: undefined,
+    selected: true
   },
   2: {
     key: 'brightness',
@@ -45,7 +47,8 @@ const defaultList = {
     min: 0,
     max: 200,
     default: 100,
-    value: undefined
+    value: undefined,
+    selected: true
   },
   3: {
     key: 'contrast',
@@ -53,7 +56,8 @@ const defaultList = {
     min: 0,
     max: 200,
     default: 100,
-    value: undefined
+    value: undefined,
+    selected: true
   },
   4: {
     key: 'opacity',
@@ -61,7 +65,8 @@ const defaultList = {
     min: 0,
     max: 100,
     default: 100,
-    value: undefined
+    value: undefined,
+    selected: true
   },
   5: {
     key: 'sepia',
@@ -69,7 +74,8 @@ const defaultList = {
     min: 0,
     max: 100,
     default: 0,
-    value: undefined
+    value: undefined,
+    selected: true
   },
   6: {
     key: 'saturate',
@@ -77,7 +83,8 @@ const defaultList = {
     min: 0,
     max: 200,
     default: 100,
-    value: undefined
+    value: undefined,
+    selected: true
   },
   7: {
     key: 'drop-shadow',
@@ -120,8 +127,9 @@ watch(isMultiple, (val) => {
 })
 let cssLabel:Ref<string> = ref(props.css)
 const filterList: Ref<Filter> = ref(JSON.parse(JSON.stringify(defaultList)))
-const selected: Ref<FilterMaps> = ref(FilterMaps.Blur)
-let sliderValue: Ref<number> = ref(0)
+const selected: Ref<FilterMaps> = ref(FilterMaps.Saturate)
+let sliderValue: Ref<number> = ref()
+filterList.value[selected.value].value = filterList.value[selected.value].default
 function paintImage() {
   if (!isMultiple.value) {
     cssLabel.value = `${filterList.value[selected.value].key}(${filterList.value[selected.value].value}${filterList.value[selected.value].unit})`
@@ -149,9 +157,9 @@ const currentLabel = computed(() => {
   return value +  filterList.value[selected.value].unit
 })
 const selectedList = computed(() => {
-  const arr: Array<number> = [0]
+  const arr: Array<number> = [selected.value]
   for (const key in filterList.value as FilterMaps) {
-    if (filterList.value[key].value) {
+    if (filterList.value[key].value && filterList.value[key].selected) {
       arr.push(Number(key))
     }
   }
@@ -279,6 +287,7 @@ pre {
 }
 .image {
   overflow: hidden;
+  border-radius: 6px;
 }
 .css-label {
   font-size: 10px;

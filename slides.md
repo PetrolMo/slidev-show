@@ -4,9 +4,8 @@ theme: seriph
 record: dev
 # random image from a curated Unsplash collection by Anthony
 # like them? see https://unsplash.com/collections/94734566/slidev
-background: /bilibili.png
+background: /cover.png
 # apply any windi css classes to the current slide
-class: 'text-center text-gray-500 '
 # https://sli.dev/custom/highlighters.html
 highlighter: shiki
 # show line numbers in code blocks
@@ -22,12 +21,29 @@ drawings:
   persist: false
 # use UnoCSS
 css: unocss
+fonts:
+  sans: 'Helvetica Neue,Robot'
+  local: 'Helvetica Neue'
 ---
-# 前端如何实现网页变灰功能？
-## ——敬爱的江泽民同志永垂不朽
-<div class="pt-12">
-  <div>汇报人：南北233</div>
+<br>
+<br>
+<div class="cover">
+  <h1>前端如何实现网页变灰功能</h1>
+  <h2>敬爱的江泽民同志永垂不朽</h2>
+  <div class="absolute bottom-10">汇报人：南北233</div>
 </div>
+
+<style>
+.cover {
+text-align: left;
+}
+.cover h1 {
+font-family: 'Alimama ShuHeiTi';
+font-style: normal;
+font-weight: 700;
+color: #FFFFFF;
+}
+</style>
 
 ---
 layout: section
