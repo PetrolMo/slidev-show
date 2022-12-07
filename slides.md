@@ -358,7 +358,7 @@ layout: two-cols
 layout: two-cols
 ---
 # 效果
-> box-shadow顾名思义“盒阴影”，只是盒子的阴影，阴影只出现在盒子的周围，光线无法穿透盒子；但是drop-shadow就符合真实世界的投影，非透明的颜色，就有投影； 透明部分，光线穿过，没投影。。
+> box-shadow顾名思义“盒阴影”，只是盒子的阴影，阴影只出现在盒子的周围，光线无法穿透盒子；但是drop-shadow就符合真实世界的投影，非透明的颜色，就有投影； 透明部分，光线穿过，没投影。
 >drop-shadow不仅可以穿透代码构建的元素的透明部分，PNG图片的透明部分也是可以穿透的。
 
 <br>
@@ -488,4 +488,3 @@ inherit：从元素的直接父级计算的 filter 属性的值。
 <!-- ./components/BImage.vue -->
 <BImage :show-component="true" :width="400" :showCss="true" :height="400" />
 </div>
----
