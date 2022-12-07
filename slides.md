@@ -257,7 +257,7 @@ layout: section
 layout: statement
 ---
 
-# 那这个不透明度滤镜和CSS中的 opacity 属性有啥区别的？
+# 那这个不透明度滤镜和CSS中的 opacity 属性有啥区别呢？
 ## 它们都用于控制元素的透明度。
 但是 filter 属性会**启动硬件加速**。浏览器会将计算任务卸载到**图形处理单元** (GPU)
 <br>
@@ -308,6 +308,130 @@ color：阴影的颜色。如果未指定，则默认为黑色。
 <BImage class="ml-10" :show-component="false" width="200" css="drop-shadow(4px 4px 10px yellow)" />
 <BImage class="ml-10" :show-component="false" width="200" css="drop-shadow(8px -8px 12px black)" />
 </div>
+---
+layout: statement
+---
+
+# box-shadow属性和filter属性的drop-shadow函数有啥不同？
+## 一个是盒阴影，一个是投影。
+<br>
+
+### 1. 兼容性不同
+### 2. 写法不同
+### 3. 效果不同
+---
+---
+# 兼容性
+> CSS3 box-shadow从IE9浏览器开始就支持了，而filter中的drop-shadowIE13才开始支持，移动端Android4.4才开始支持。
+<div class="flex mt-10">
+<img width="400" src="/box-shadow.png" />
+<img width="400" src="/filter.png" />
+</div>
+---
+layout: two-cols
+---
+# 写法
+
+### filter中的drop-shadow语法如下：
+```css {2|3}
+{
+  filter: drop-shadow(x偏移 y偏移 模糊大小 色值);
+  filter:drop-shadow(5px 5px 10px black)
+}
+```
+<br>
+<br>
+
+### box-shadow语法如下：
+```css {2|3｜all}
+{
+  box-shadow: x偏移 y偏移 模糊大小 色值;
+  box-shadow: 5px 5px 10px black;
+}
+```
+::right::
+
+<img class="ml-10" width="250" style="filter:drop-shadow(5px 5px 10px black)" src="/exm.jpg" />
+<img class="ml-10 mt-10" style="box-shadow: 5px 5px 10px black;" width="250" src="/exm.jpg" />
+
+---
+layout: two-cols
+---
+# 效果
+> box-shadow顾名思义“盒阴影”，只是盒子的阴影，阴影只出现在盒子的周围，光线无法穿透盒子；但是drop-shadow就符合真实世界的投影，非透明的颜色，就有投影； 透明部分，光线穿过，没投影。。
+>drop-shadow不仅可以穿透代码构建的元素的透明部分，PNG图片的透明部分也是可以穿透的。
+
+<br>
+
+```css{all}
+.box1 {
+  width: 100px;
+  height: 100px;
+  border: 20px dashed black;
+  box-shadow: 5px 5px 10px red;
+}
+
+.box2 {
+  width: 100px;
+  height: 100px;
+  border: 20px dashed black;
+  filter: drop-shadow(5px 5px 10px red);
+}
+
+```
+::right::
+<div class="flex">
+<div class="mt-50 ml-10">
+  <div class="box box-shadow">
+    box1
+  </div>
+  <div class="box filter-drop-shadow">
+    box2
+  </div>
+</div>
+<div class="mt-50 ml-10">
+<div class="box3 box-shadow">
+  <img width="100" src="/example.png" />
+</div>
+<div class="box3 filter-drop-shadow">
+  <img width="100" src="/example.png" />
+</div>
+</div>
+<div class="mt-50 ml-10">
+<div class="box3 box-shadow">
+  <img width="100" src="/example2.png" />
+</div>
+<div class="box3 filter-drop-shadow">
+  <img width="100" src="/example2.png" />
+</div>
+</div>
+</div>
+
+
+<style>
+.box {
+width: 100px;
+height: 100px;
+border: 20px dashed black;
+margin-top: 30px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.box-shadow {
+box-shadow: 5px 5px 10px red;
+}
+.filter-drop-shadow {
+filter: drop-shadow(5px 5px 10px red);
+}
+.box3 {
+  margin-top: 30px;
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+}
+</style>
+
 ---
 --- 
 ## 7.saturate 饱和度
